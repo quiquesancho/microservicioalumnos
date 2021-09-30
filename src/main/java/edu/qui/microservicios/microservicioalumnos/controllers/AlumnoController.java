@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -51,7 +52,7 @@ public class AlumnoController {
 
 		return responseEntity;
 	}
-	
+
 //	@GetMapping
 //	public ResponseEntity<Iterable<Alumno>> getAlumnos(@RequestHeader("miciudad") String miciudad) {
 //		ResponseEntity<Iterable<Alumno>> responseEntity = null;
@@ -168,6 +169,22 @@ public class AlumnoController {
 
 	}
 
+	@GetMapping(value = "/pagina")
+	public ResponseEntity<Iterable<Alumno>> findAllByPagination(Pageable pageable) {
+		ResponseEntity<Iterable<Alumno>> responseEntity = null;
+		Iterable<Alumno> listaAlumnos = null;
+
+		log.debug("Entrando en la paginación");
+
+		listaAlumnos = alumnoService.findAll(pageable);
+
+		responseEntity = ResponseEntity.ok(listaAlumnos);
+
+		log.debug("Saliendo de paginación");
+
+		return responseEntity;
+	}
+
 	private ResponseEntity<?> getErrors(BindingResult br) {
 		ResponseEntity<?> responseEntity = null;
 		List<ObjectError> listaErrores;
@@ -176,7 +193,7 @@ public class AlumnoController {
 		listaErrores.forEach(oe -> {
 			log.error(oe.toString());
 		});
-		
+
 		responseEntity = ResponseEntity.badRequest().body(listaErrores);
 
 		return responseEntity;

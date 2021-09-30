@@ -3,11 +3,16 @@ package edu.qui.microservicios.microservicioalumnos.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
 
 public interface AlumnoService {
 	
 	public Iterable<Alumno> findAll();
+	
+	public Page<Alumno> findAll(Pageable pageable);
 	
 	public Optional<Alumno> findById(int id);
 	
