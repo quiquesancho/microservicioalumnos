@@ -1,5 +1,6 @@
 package edu.qui.microservicios.microservicioalumnos.controllers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,8 +9,11 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
 import edu.qui.microservicios.microservicioalumnos.services.AlumnoService;
@@ -90,6 +95,26 @@ public class AlumnoController {
 
 		return responseEntity;
 	}
+	
+	@GetMapping(value = "/getFoto/{id}")
+	public ResponseEntity<?> getFotoAlumnoById(@PathVariable("id") int id){
+		ResponseEntity<?> responseEntity = null;
+		Optional<Alumno> oa = null;
+		Resource imagen = null;
+		
+		log.debug("Entrado en obtener foto de alumno por id");
+		
+		oa = alumnoService.findById(id);
+		
+		if(oa.isPresent() && oa.get().getFoto() != null) {
+			imagen = new ByteArrayResource(oa.get().getFoto());
+			responseEntity = ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagen);
+		} else {
+			responseEntity = ResponseEntity.notFound().build();
+		}
+		
+		return responseEntity;
+	}
 
 	@PostMapping
 	public ResponseEntity<?> addAlumno(@Valid @RequestBody Alumno alumno, BindingResult br) {
@@ -103,6 +128,31 @@ public class AlumnoController {
 			log.debug("Ha entrado en insertar alumno. Alumno validado");
 			alumnoNuevo = alumnoService.save(alumno);
 
+			responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(alumnoNuevo);
+
+			log.debug("Ha salido de insertar un alumno");
+		}
+
+		return responseEntity;
+	}
+
+	@PostMapping("/addFoto")
+	public ResponseEntity<?> addAlumnoFoto(@Valid Alumno alumno, BindingResult br, MultipartFile archivo)
+			throws IOException {
+		ResponseEntity<?> responseEntity = null;
+		Alumno alumnoNuevo = null;
+
+		if (br.hasErrors()) {
+			log.debug("Hay errores en los datos de entrada");
+			responseEntity = getErrors(br);
+		} else {
+
+			if (!archivo.isEmpty()) {
+				alumno.setFoto(archivo.getBytes());
+			}
+			
+			log.debug("Ha entrado en insertar alumno. Alumno validado");
+			alumnoNuevo = alumnoService.save(alumno);
 			responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(alumnoNuevo);
 
 			log.debug("Ha salido de insertar un alumno");
@@ -144,6 +194,36 @@ public class AlumnoController {
 			responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 			log.debug("No ha actualizado correctamente el alumno");
 		}
+
+		return responseEntity;
+	}
+	
+	@PutMapping("/updateAlumno/{id}")
+	public ResponseEntity<?> updateAlumnoFoto(@PathVariable("id") int id, @Valid Alumno alumno, BindingResult br, MultipartFile archivo) throws IOException {
+		ResponseEntity<?> responseEntity = null;
+		Alumno alumnoBuscado = null;
+
+		log.debug("Ha entrado en actualizar alumno con foto");
+		
+		if (br.hasErrors()) {
+			log.debug("Hay errores en los datos de entrada");
+			responseEntity = getErrors(br);
+		} else {
+			if (!archivo.isEmpty()) {
+				alumno.setFoto(archivo.getBytes());
+			}
+
+			alumnoBuscado = alumnoService.update(id, alumno);
+
+			if (alumnoBuscado != null) {
+				responseEntity = ResponseEntity.ok(alumnoBuscado);
+				log.debug("Ha actualizado correctamente el alumno");
+			} else {
+				responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+				log.debug("No ha actualizado correctamente el alumno");
+			}
+		}
+		
 
 		return responseEntity;
 	}

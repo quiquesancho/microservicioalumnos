@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -16,6 +17,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "alumnos")
@@ -42,6 +45,10 @@ public class Alumno {
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created_at;
+	
+	@Lob
+	@JsonIgnore
+	private byte[] foto;
 	
 	
 	public Alumno(int id, String nombre, String apellido, String email, int edad, Date created_at) {
@@ -108,6 +115,24 @@ public class Alumno {
 
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
+	}
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] bs) {
+		this.foto = bs;
+	}
+	
+	public Integer getFotoHashCode() {
+		Integer idev = null;
+		
+		if (this.foto != null) {
+			idev = this.foto.hashCode();
+		}
+		
+		return idev;
 	}
 
 	@Override

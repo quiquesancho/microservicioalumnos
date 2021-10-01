@@ -71,6 +71,10 @@ public class AlumnoServiceImp implements AlumnoService {
 			alumnoSelec.setEmail(a.getEmail());
 			alumnoSelec.setEdad(a.getEdad());
 			
+			if(a.getFoto() != null) {
+				alumnoSelec.setFoto(a.getFoto());
+			}
+			
 			alumnoEditado = alumnoRepository.save(alumnoSelec);
 		}
 		
