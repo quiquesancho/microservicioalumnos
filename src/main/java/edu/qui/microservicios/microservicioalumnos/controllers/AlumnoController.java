@@ -95,24 +95,26 @@ public class AlumnoController {
 
 		return responseEntity;
 	}
-	
+
 	@GetMapping(value = "/getFoto/{id}")
-	public ResponseEntity<?> getFotoAlumnoById(@PathVariable("id") int id){
+	public ResponseEntity<?> getFotoAlumnoById(@PathVariable("id") int id) {
 		ResponseEntity<?> responseEntity = null;
 		Optional<Alumno> oa = null;
 		Resource imagen = null;
-		
+
 		log.debug("Entrado en obtener foto de alumno por id");
-		
+
 		oa = alumnoService.findById(id);
-		
-		if(oa.isPresent() && oa.get().getFoto() != null) {
+
+		if (oa.isPresent() && oa.get().getFoto() != null) {
 			imagen = new ByteArrayResource(oa.get().getFoto());
 			responseEntity = ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagen);
 		} else {
 			responseEntity = ResponseEntity.notFound().build();
 		}
 		
+		log.debug("Saliendo de obtener foto de alumno por id");
+
 		return responseEntity;
 	}
 
@@ -150,7 +152,7 @@ public class AlumnoController {
 			if (!archivo.isEmpty()) {
 				alumno.setFoto(archivo.getBytes());
 			}
-			
+
 			log.debug("Ha entrado en insertar alumno. Alumno validado");
 			alumnoNuevo = alumnoService.save(alumno);
 			responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(alumnoNuevo);
@@ -197,14 +199,15 @@ public class AlumnoController {
 
 		return responseEntity;
 	}
-	
+
 	@PutMapping("/updateAlumno/{id}")
-	public ResponseEntity<?> updateAlumnoFoto(@PathVariable("id") int id, @Valid Alumno alumno, BindingResult br, MultipartFile archivo) throws IOException {
+	public ResponseEntity<?> updateAlumnoFoto(@PathVariable("id") int id, @Valid Alumno alumno, BindingResult br,
+			MultipartFile archivo) throws IOException {
 		ResponseEntity<?> responseEntity = null;
 		Alumno alumnoBuscado = null;
 
 		log.debug("Ha entrado en actualizar alumno con foto");
-		
+
 		if (br.hasErrors()) {
 			log.debug("Hay errores en los datos de entrada");
 			responseEntity = getErrors(br);
@@ -223,7 +226,6 @@ public class AlumnoController {
 				log.debug("No ha actualizado correctamente el alumno");
 			}
 		}
-		
 
 		return responseEntity;
 	}
