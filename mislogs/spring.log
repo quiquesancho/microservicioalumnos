@@ -334,3 +334,8 @@
 2021-10-04 11:07:28.186 DEBUG 20796 --- [http-nio-8080-exec-9] e.q.m.m.controllers.AlumnoController     : Saliendo de obtener foto de alumno por id
 2021-10-04 11:13:58.912 DEBUG 20796 --- [http-nio-8080-exec-2] e.q.m.m.controllers.AlumnoController     : Entrando en la paginación
 2021-10-04 11:13:58.919 DEBUG 20796 --- [http-nio-8080-exec-2] e.q.m.m.controllers.AlumnoController     : Saliendo de paginación
+2021-10-04 11:59:03.522  INFO 20796 --- [RMI TCP Connection(167)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2021-10-04 11:59:03.655  INFO 20796 --- [RMI TCP Connection(168)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2021-10-04 11:59:03.712  INFO 20796 --- [RMI TCP Connection(167)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-04 11:59:03.715  INFO 20796 --- [RMI TCP Connection(167)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2021-10-04 11:59:03.721  INFO 20796 --- [RMI TCP Connection(167)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.

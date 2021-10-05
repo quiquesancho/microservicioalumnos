@@ -9,8 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
 import edu.qui.microservicios.microservicioalumnos.modelo.repository.AlumnoRepository;
+import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
 
 @Service
 public class AlumnoServiceImp implements AlumnoService {

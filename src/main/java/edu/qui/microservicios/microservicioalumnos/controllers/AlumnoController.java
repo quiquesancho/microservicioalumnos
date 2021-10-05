@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
 import edu.qui.microservicios.microservicioalumnos.services.AlumnoService;
+import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
 
 @CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })

@@ -1,12 +1,11 @@
 package edu.qui.microservicios.microservicioalumnos.modelo.repository;
+import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
-
-import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
 
 public interface AlumnoRepository extends PagingAndSortingRepository<Alumno, Integer> {
 	
