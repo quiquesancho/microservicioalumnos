@@ -1,5 +1,5 @@
 package edu.qui.microservicios.microservicioalumnos.modelo.repository;
-import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
+import edu.qui.microservicios.microserviciocomun.model.entity.Alumno;
 
 import java.util.List;
 

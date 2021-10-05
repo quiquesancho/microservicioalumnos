@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
+import edu.qui.microservicios.microserviciocomun.model.entity.Alumno;
 
 public interface AlumnoService {
 	

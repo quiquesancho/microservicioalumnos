@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.qui.microservicios.microservicioalumnos.modelo.repository.AlumnoRepository;
-import edu.qui.microservicios.microservicioalumnos.modelo.entity.Alumno;
+import edu.qui.microservicios.microserviciocomun.model.entity.Alumno;
 
 @Service
 public class AlumnoServiceImp implements AlumnoService {
